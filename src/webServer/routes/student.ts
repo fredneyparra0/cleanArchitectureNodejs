@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { findAllStudents,createStudent, findStudentById, updateStudentById, deleteStudentById } from '../../usecases/student';
 
 async function findAll (req:Request, res:Response) {
+    console.log(req);
     const students = await findAllStudents();
     res.send({data: students});
 }
