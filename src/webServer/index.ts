@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import 'reflect-metadata'
 
 import { router } from './routes/index';
 import { makeDb } from '../dataAccess/index';
@@ -25,3 +26,4 @@ app.use(router);
 app.listen(PORT, () => {
     console.log(`Runing in port ${PORT}`)
 })
+

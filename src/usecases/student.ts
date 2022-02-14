@@ -1,23 +1,38 @@
-import { createOne, findAll, findById, updateOneById, deleteOneById } from '../dataAccess/students';
-import { modelStudent } from '../models/teachers/studentSchema';
+import { RepositoryNoSQL } from '../dataAccess/dataAccesNoSql';
+import { modelStudent } from '../models/students/studentSchema';
+import { IStudent } from '../models/students/studentInterface';
+import { RepositorySQL } from '../dataAccess/dataAccesSql';
 
-export async function findAllStudents () {
-    return await findAll(modelStudent);
+import { UserEntity } from '../entities';
+import { getRepository } from 'typeorm';
+
+interface IStudentMethods {
+    //getAll(): Promise<IStudent[]>;
+    getById(id: string): Promise<IStudent>;
+    save(user: IStudent): Promise<IStudent>; 
 }
 
-export async function createStudent (data: any) {
-    const dataResCreateOne = await createOne(modelStudent, data); 
-    return dataResCreateOne;
-}
-
-export async function findStudentById (id:string) {
-    return await findById(modelStudent, id);
-}
-
-export async function updateStudentById (id:string, data:any) {
-    return await updateOneById(modelStudent, id, data);
-}
-
-export async function deleteStudentById (id: string) {
-    return await deleteOneById(modelStudent,id);
+export class StudentRepository implements IStudentMethods {
+    private entity;
+    constructor() {
+      this.entity = process.env.TYPE_DB || 'MONGO' === 'MONGO' ? 
+        new RepositoryNoSQL(modelStudent) :
+        new RepositorySQL(UserEntity);
+        // new RepositoryNoSQL(modelStudent); 
+    }
+  
+    async getAll() {
+        const users = await getRepository(UserEntity).find();
+        return users;
+    //   return await this.entity.findAll();
+    }
+  
+    async getById(id: string) {
+      return await this.entity.findById(id);
+    }
+  
+    async save(user: any) {
+      return await this.entity.save(user);
+    }
+  
 }

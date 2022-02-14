@@ -4,7 +4,10 @@
   "description": "example with clean architecture with typescript",
   "main": "src/index.ts",
   "scripts": {
-    "start:dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/webServer/index.ts"
+    "start:dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/webServer/index.ts",
+    "build": "tsc",
+    "start:build": "node dist/webServer/index.js",
+    "dev": "tsc-watch --onSuccess \"node dist/webServer/index.js\""
   },
   "keywords": [
     "nodejs",
@@ -20,11 +23,15 @@
     "express": "^4.17.2",
     "joi": "^17.5.0",
     "mongoose": "^6.1.7",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.41"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/morgan": "^1.9.3",
-    "ts-node": "^10.4.0"
+    "ts-node": "^10.4.0",
+    "tsc-watch": "^4.6.0"
   }
 }

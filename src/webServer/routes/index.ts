@@ -1,17 +1,17 @@
-import { Router } from "express"
+import { Router, Request, Response } from "express"
+import { getRepository } from "typeorm";
+import { UserEntity } from "../../entities";
 export const router = Router();
 
 import { students } from './student';
 
-router
-    .get('/student', students.findAll)
-    .get('/student/:id', students.findById)
+router.get('/student', students.findAll);
 
-router
-    .post('/student', students.create);
+// router.get('/student', async ( req: Request, res: Response ): Promise<any> => {
+//     const users = await getRepository(UserEntity).find();
+//     res.json(users);
+// });
 
-router
-    .put('/student/:id', students.updateById);
+router.get('/student/:id', students.findById)
 
-router
-    .delete('/student/:id', students.deleteById)
+router.post('/student', students.create);
